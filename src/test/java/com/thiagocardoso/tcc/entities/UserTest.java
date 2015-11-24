@@ -1,6 +1,7 @@
 package com.thiagocardoso.tcc.entities;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
@@ -11,35 +12,48 @@ import com.google.common.collect.Maps;
 
 public class UserTest {
 	
+	private static final String THIAGO = "thiago";
+	private static final String THIAGO_CARDOSO = "Thiago Cardoso";
+
 	@Test
-	public void userWithName() {
-		final User user = User.from("thiago");
+	public void userWithLoginAndName() {
+		final User user = User.from(THIAGO, THIAGO_CARDOSO);
 		assertNotNull(user);
-		assertEquals("thiago", user.getName());
+		assertEquals(THIAGO_CARDOSO, user.getName());
+		assertEquals(THIAGO, user.getLogin());
 	}
 	
 	@Test
-	public void twoEqualUsersrWithNameThiago() {
-		final User user1 = User.from("thiago");
-		final User user2 = User.from("thiago");
+	public void twoEqualUsersWithLoginThiago() {
+		final User user1 = User.from(THIAGO, THIAGO_CARDOSO);
+		final User user2 = User.from(THIAGO, THIAGO_CARDOSO);
 		assertNotNull(user1);
 		assertNotNull(user2);
 		assertEquals(user1, user2);
 	}
-
+	
+	@Test
+	public void twoDifferentUsersWithLoginThiago() {
+		final User user1 = User.from(THIAGO, THIAGO_CARDOSO);
+		final User user2 = User.from(THIAGO, "Thiago Silveira");
+		assertNotNull(user1);
+		assertNotNull(user2);
+		assertNotEquals(user1, user2);
+	}
+	
 	@Test
 	public void insertUserInHashAndRetrieveWithAnotherInstance() {
 		HashMap<User, String> map = Maps.newHashMap();
 		
-		map.put(new User("thiago"), "test");
+		map.put(User.from(THIAGO, THIAGO_CARDOSO), "test");
 		
-		assertNotNull(map.get(new User("thiago")));
-		assertEquals("test", map.get(new User("thiago")));
+		assertNotNull(map.get(User.from(THIAGO, THIAGO_CARDOSO)));
+		assertEquals("test", map.get(User.from(THIAGO, THIAGO_CARDOSO)));
 	}
 	
 	@Test
 	public void validateUserToString() {
-		final User user = new User("test");
-		assertEquals("User{name=test}", user.toString());
+		final User user = User.from("test", "TEST");
+		assertEquals("User{login=test, name=TEST}", user.toString());
 	}
 }

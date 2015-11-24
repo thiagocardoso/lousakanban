@@ -6,8 +6,10 @@ import com.google.common.base.Objects;
 public class User {
 
 	private final String name;
+	private final String login;
 
-	User(String name) {
+	User(String login, String name) {
+		this.login = login;
 		this.name = name;
 	}
 
@@ -15,26 +17,32 @@ public class User {
 		return name;
 	}
 
-	public static User from(String name) {
-		return new User(name);
+	public static User from(String login, String name) {
+		return new User(login, name);
+	}
+	
+	public String getLogin() {
+		return this.login;
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof User){
 			User other = (User)obj;
-			return Objects.equal(this.name, other.name);
+			return Objects.equal(this.login, this.login) 
+				&& Objects.equal(this.name, other.name);
 		}
 		return false;
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(name);
+		return Objects.hashCode(login, name);
 	}
 	
 	@Override
 	public String toString() {
-		return MoreObjects.toStringHelper(this).add("name", this.name).toString();
+		return MoreObjects.toStringHelper(this).add("login", this.login).add("name", this.name).toString();
 	}
+
 }
