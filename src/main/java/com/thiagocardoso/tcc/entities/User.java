@@ -1,10 +1,17 @@
 package com.thiagocardoso.tcc.entities;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
+@Document
 public class User {
 
+	@Id
+	private String id;
+	
 	private final String name;
 	private final String login;
 
