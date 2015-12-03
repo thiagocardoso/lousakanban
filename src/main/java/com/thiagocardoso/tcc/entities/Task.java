@@ -1,9 +1,16 @@
 package com.thiagocardoso.tcc.entities;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import jersey.repackaged.com.google.common.base.Objects;
 
+@Document
 public class Task {
 
+	@Id
+	private String id;
+	
 	private User user;
 	private String title;
 

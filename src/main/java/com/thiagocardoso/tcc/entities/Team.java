@@ -6,13 +6,20 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
+@Document
 public class Team {
 
+	@Id
+	private String id;
+	
 	private final String name;
 	private final List<User> users = Lists.newLinkedList();
 
