@@ -1,5 +1,9 @@
 package com.thiagocardoso.tcc.repository;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +24,20 @@ public class TeamRepositoryIT {
 	@Autowired
 	private TeamRepository repository;
 	
+	@Before
+	public void setUp() {
+		newTeamTest();		
+	}
+	
 	@Test
-	public void createUser() {
-		final Team team = Team.withName("teste");
-		repository.save(team);		
+	public void findByName() {
+		Team team = repository.findByName("test");
+		assertNotNull(team);
+		assertEquals("test", team.getName());
+	}
+	
+	private void newTeamTest() {
+		final Team team = Team.withName("test");
+		repository.save(team);
 	}
 }

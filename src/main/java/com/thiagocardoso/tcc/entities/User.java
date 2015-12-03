@@ -1,20 +1,27 @@
 package com.thiagocardoso.tcc.entities;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 @Document
 public class User {
 
 	@Id
 	private String id;
-	
 	private final String name;
 	private final String login;
+	private final List<Task> tasks = Lists.newLinkedList();
 
+	private Team team;
+	
 	User(String login, String name) {
 		this.login = login;
 		this.name = name;
@@ -30,6 +37,25 @@ public class User {
 	
 	public String getLogin() {
 		return this.login;
+	}
+	
+	public Team getTeam() {
+		return this.team;		
+	}
+	
+	public List<Task> getTasks() {
+		return this.tasks;
+	}
+	
+	public User addTask(Task task) {
+		checkNotNull(task);
+		this.tasks.add(task);
+		return this;
+	}
+	
+	public void removeTask(Task task) {
+		if(tasks.contains(task))
+			this.tasks.remove(task);
 	}
 	
 	@Override

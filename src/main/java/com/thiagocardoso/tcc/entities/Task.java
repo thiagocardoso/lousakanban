@@ -1,35 +1,61 @@
 package com.thiagocardoso.tcc.entities;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.Date;
+
+import com.google.common.base.Preconditions;
 
 import jersey.repackaged.com.google.common.base.Objects;
 
-@Document
 public class Task {
 
-	@Id
-	private String id;
-	
-	private User user;
-	private String title;
-
-	Task(User user, String title){
-		this.user = user;
-		this.title = title;
+	public static class Builder {
+		private String title;
 		
+		private String description;
+		
+		private Date createdAt = new Date();
+		
+		private Date updatedAt = new Date();
+		
+		Builder(String title) {
+			Preconditions.checkNotNull(title);
+			this.title = title;
+		}
+		
+		public static Builder of(String title) {
+			return new Builder(title);
+		}
+		
+		public Builder description(String description) {
+			this.description = description;
+			return this;
+		}
+
+		public Task build() {
+			return new Task(title, description, createdAt, updatedAt);
+		}
 	}
 	
-	public static Task toUser(User user, String title) {
-		return new Task(user, title);
-	}
+	private final String title;
+	
+	private final String description;
+	
+	private final Date createdAt;
+	
+	private final Date updatedAt;
 
-	public User getUser() {
-		return this.user;
+	Task(String title, String description, Date createdAt, Date updatedAt){
+		this.title = title;
+		this.description = description;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 	}
-
+	
 	public Task assign(User user) {
-		this.user = user;
+		checkNotNull(user);
+		user.addTask(this);
 		return this;
 	}
 
@@ -37,11 +63,27 @@ public class Task {
 		return this.title;
 	}
 	
+	public User getUser() {
+		return this.getUser();
+	}
+	
+	public Date getCreatedAt() {
+		return this.createdAt;
+	}
+	
+	public Date getUpdatedAt() {
+		return this.updatedAt;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Task) {
 			final Task other = (Task)obj;
-			return Objects.equal(this.user, other.user) && Objects.equal(this.title, other.title);
+			return Objects.equal(this.title, other.title);
 		}
 		return false;
 	}

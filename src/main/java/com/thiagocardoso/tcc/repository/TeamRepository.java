@@ -6,4 +6,6 @@ import com.thiagocardoso.tcc.entities.Team;
 
 public interface TeamRepository extends MongoRepository<Team, String> {
 
+	public Team findByName(String name);
+
 }
