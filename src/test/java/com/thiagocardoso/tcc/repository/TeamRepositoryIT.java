@@ -38,6 +38,6 @@ public class TeamRepositoryIT {
 	
 	private void newTeamTest() {
 		final Team team = Team.withName("test");
-		repository.save(team);
+		repository.save(team); 
 	}
 }

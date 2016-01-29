@@ -15,24 +15,30 @@ import com.google.common.collect.Lists;
 public class User {
 
 	@Id
-	private String id;
+	private final String id;
 	private final String name;
 	private final String login;
 	private final List<Task> tasks = Lists.newLinkedList();
 
 	private Team team;
 	
-	User(String login, String name) {
+	User(String id, String login, String name) {
+		this.id = id;
 		this.login = login;
 		this.name = name;
 	}
-
-	public Object getName() {
-		return name;
-	}
+	
 
 	public static User from(String login, String name) {
-		return new User(login, name);
+		return new User(null, login, name);
+	}
+	
+	public void setTeam(Team team) {
+		this.team = team;
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	public String getLogin() {
