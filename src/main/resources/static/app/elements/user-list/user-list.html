@@ -9,24 +9,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<dom-module id="my-list">
+<dom-module id="user-list">
   <template>
-  	<iron-ajax id="usersAjax"  
+  	<iron-ajax 
+  		auto
+  		id="ajax"  
     	url="/ws/users/list"
     	handle-as="json"
-    	lastReponse="{{users}}"
-    	debounce-duration="300" 
-    	auto></iron-ajax>>
+    	last-response="{{users}}"></iron-ajax>
     <style>
       :host {
         display: block;
       }
     </style>
-    <ul>
-      <template is="dom-repeat" items="{{users}}" item="u">
-        <li><span class="paper-font-body1">{{u.name}}</span></li>
-      </template>
-    </ul>
+   	<paper-listbox>
+    	<template is="dom-repeat" items="{{users}}">
+        	<paper-item>
+        		<paper-item-body>
+        			<div>{{item.login}}</div>
+        		</paper-item-body>
+        	</paper-item>
+    	</template>
+    </paper-listbox>
   </template>
 
   <script>
@@ -35,14 +39,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   
       Polymer({
         is: 'user-list',
-        properties: {
-          users: {
-            type: Array,
-            notify: true,
-          }
-        },
         ready: function() {
-//         	this.$.usersAjax.generateRequest();
         }
       });
     })();

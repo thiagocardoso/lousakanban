@@ -12,7 +12,7 @@ import com.thiagocardoso.tcc.entities.User;
 import com.thiagocardoso.tcc.repository.UserRepository;
 
 @RestController
-@RequestMapping("/ws/user")
+@RequestMapping("/ws/users")
 public class UserController {
 
 	@Autowired
