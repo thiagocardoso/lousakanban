@@ -24,7 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		</div>
 		<div class="card-actions">
 			<paper-button on-click="doSubmit">Salvar</paper-button>
-            <paper-button>Cancelar</paper-button>
+            <paper-button on-click="closeDialog">Cancelar</paper-button>
 		</div>
 		</form>
     </paper-card>
@@ -46,6 +46,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         doSubmit: function() {
         	document.getElementById("form").submit();
+			this.closeDialog();
+        },
+        closeDialog: function() {
         	this.fire("iron-signal", {name: 'dialog-closed', data: null});
         }
       });
