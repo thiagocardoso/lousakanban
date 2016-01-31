@@ -16,23 +16,25 @@ public class User {
 
 	@Id
 	private final String id;
-	
 	private final String name;
-	
 	private final String login;
+	private final String email;
+	private final String password;
 	private final List<Task> tasks = Lists.newLinkedList();
 
 	private Team team;
 	
-	User(String id, String login, String name) {
+	User(String id, String login, String name, String email, String password) {
 		this.id = id;
 		this.login = login;
 		this.name = name;
+		this.email = email;
+		this.password = password;
 	}
 	
 
-	public static User from(String login, String name) {
-		return new User(null, login, name);
+	public static User from(String login, String name, String email, String password) {
+		return new User(null, login, name, email, password);
 	}
 	
 	public void setTeam(Team team) {
@@ -49,6 +51,14 @@ public class User {
 	
 	public Team getTeam() {
 		return this.team;		
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+	
+	public String getPassword() {
+		return this.password;
 	}
 	
 	public List<Task> getTasks() {
@@ -70,8 +80,7 @@ public class User {
 	public boolean equals(Object obj) {
 		if(obj instanceof User){
 			User other = (User)obj;
-			return Objects.equal(this.login, this.login) 
-				&& Objects.equal(this.name, other.name);
+			return Objects.equal(this.login, other.login);
 		}
 		return false;
 	}

@@ -19,7 +19,7 @@ public class TeamTest {
 	@Test
 	public void createNewTeamAndAddUser() {
 		final Team team = Team.withName(EQUIPE_1);
-		team.addUser(User.from("teste", "Usuário Teste"));
+		team.addUser(User.from("teste", "Usuário Teste", "teste@teste.com", "teste"));
 		assertFalse(team.getUsers().isEmpty());
 		assertEquals(1, team.userCount());
 	}
@@ -27,7 +27,7 @@ public class TeamTest {
 	@Test
 	public void createNewTeamAddUserAndRemoveIt() {
 		final Team team = Team.withName(EQUIPE_1);
-		final User user = User.from("teste", "Usuário Teste");
+		final User user = User.from("teste", "Usuário Teste", "teste@teste.com", "teste");
 		team.addUser(user);
 		assertFalse(team.getUsers().isEmpty());
 		assertEquals(1, team.userCount());

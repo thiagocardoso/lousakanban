@@ -24,9 +24,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "save", method = RequestMethod.POST)
-	public String save(@RequestParam("login") String login, @RequestParam("name") String name) {
+	public String save(@RequestParam("login") String login, @RequestParam("name") String name,
+			@RequestParam("email") String email, @RequestParam("password") String password) {
 		try {
-			userRepository.save(User.from(login, name));
+			userRepository.save(User.from(login, name, email, password));
 			return "OK";
 		} catch (Exception e) {
 			return "ERROR";

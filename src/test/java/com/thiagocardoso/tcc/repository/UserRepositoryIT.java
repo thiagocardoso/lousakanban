@@ -32,13 +32,13 @@ public class UserRepositoryIT {
 	
 	@Test
 	public void createUser() {
-		final User user = User.from("teste", "Usuário teste");
+		final User user = User.from("teste", "Usuário teste", "teste@teste.com", "teste");
 		repository.save(user);		
 	}
 	
 	@Test
 	public void findByName() {
-		newUser("teste", "User Test");
+		newUser("teste", "User Test", "teste@teste.com", "teste");
 		
 		User user = repository.findByName("User Test");
 		
@@ -48,7 +48,7 @@ public class UserRepositoryIT {
 	
 	@Test
 	public void findByLogin() {
-		newUser("test", "User Test");
+		newUser("test", "User Test", "teste@teste.com", "teste");
 		
 		User user = repository.findByLogin("test");
 		
@@ -58,7 +58,7 @@ public class UserRepositoryIT {
 	
 	@Test
 	public void userWithTask() {
-		User user = User.from("teste", "Usuario teste");
+		User user = User.from("teste", "Usuario teste", "teste@teste.com", "teste");
 		Task.Builder.of("Teste!").build().assign(user);
 		repository.save(user);
 		
@@ -66,7 +66,7 @@ public class UserRepositoryIT {
 		assertFalse(userSaved.getTasks().isEmpty());
 	}
 	
-	private void newUser(String login, String name) {
-		repository.save(User.from(login, name));		
+	private void newUser(String login, String name, String email, String password) {
+		repository.save(User.from(login, name, email, password));		
 	}
 }
