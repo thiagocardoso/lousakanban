@@ -3,9 +3,9 @@ package com.thiagocardoso.tcc.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thiagocardoso.tcc.entities.User;
@@ -22,11 +22,11 @@ public class UserController {
 	public List<User> list() {
 		return userRepository.findAll();
 	}
-	
-	@RequestMapping(name = "create", method = RequestMethod.POST)
-	public String create(@RequestBody User user) {
+	//, method = RequestMethod.POST
+	@RequestMapping(value = "save", method = RequestMethod.POST)
+	public String save(@RequestParam("login") String login, @RequestParam("name") String name) {
 		try {
-			userRepository.save(user);
+			userRepository.save(User.from(login, name));
 			return "OK";
 		} catch (Exception e) {
 			return "ERROR";

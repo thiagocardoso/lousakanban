@@ -17,11 +17,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     	url="/ws/users/list"
     	handle-as="json"
     	last-response="{{users}}"></iron-ajax>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
+
+    <iron-signals on-iron-signal-dialog-closed="dialogClosed"></iron-signals>
+    
    	<paper-listbox>
     	<template is="dom-repeat" items="{{users}}">
         	<paper-item>
@@ -31,6 +29,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         	</paper-item>
     	</template>
     </paper-listbox>
+    
+    <paper-button on-click="openDialog">Novo</paper-button>
+  	
+  	<paper-dialog id="formdialog" modal>
+  		<user-form></user-form>
+  	</paper-dialog>
   </template>
 
   <script>
@@ -40,6 +44,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Polymer({
         is: 'user-list',
         ready: function() {
+        },
+        openDialog: function() {
+        	document.getElementById("formdialog").open();
+        },
+        dialogClosed: function() {
+        	document.getElementById("ajax").generateRequest();
+        	document.getElementById("formdialog").close();
         }
       });
     })();

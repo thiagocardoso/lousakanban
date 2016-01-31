@@ -16,7 +16,9 @@ public class User {
 
 	@Id
 	private final String id;
+	
 	private final String name;
+	
 	private final String login;
 	private final List<Task> tasks = Lists.newLinkedList();
 

@@ -1,0 +1,54 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="user-form">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <paper-card heading="Novo Usuário">
+		<form is="iron-form" id="form" method="post" action="/ws/users/save">
+		<div class="card-content">
+				<paper-input name="login" value="{{user.login}}" label="Login" disabled="{{user.login}}" required auto-validate error-message="Necessário informar um login de usuário!"></paper-input>
+				<paper-input name="name" value="{{user.name}}" label="Nome" required auto-validate error-message="Necessário informar um nome de usuário!"></paper-input>
+		</div>
+		<div class="card-actions">
+			<paper-button on-click="doSubmit">Salvar</paper-button>
+            <paper-button>Cancelar</paper-button>
+		</div>
+		</form>
+    </paper-card>
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+  
+      Polymer({
+        is: 'user-form',
+        properties: {
+          user: {
+            type: Object,
+            notify: true,
+          }
+        },
+        ready: function() {
+        },
+        doSubmit: function() {
+        	document.getElementById("form").submit();
+        	this.fire("dialog-closed", null);
+        }
+      });
+    })();
+  </script>
+</dom-module>
