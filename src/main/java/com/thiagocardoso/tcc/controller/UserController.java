@@ -22,7 +22,7 @@ public class UserController {
 	public List<User> list() {
 		return userRepository.findAll();
 	}
-	//, method = RequestMethod.POST
+
 	@RequestMapping(value = "save", method = RequestMethod.POST)
 	public String save(@RequestParam("login") String login, @RequestParam("name") String name) {
 		try {
