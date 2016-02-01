@@ -28,7 +28,15 @@ public class UserController {
 	public String save(@RequestParam("login") String login, @RequestParam("name") String name,
 			@RequestParam("email") String email, @RequestParam("password") String password) {
 		try {
-			userRepository.save(User.from(login, name, email, password));
+			User user = userRepository.findByLogin(login);
+			if(user!=null) {
+				user.setName(name);
+				user.setEmail(email);
+				user.setPassword(password);
+			}else{
+				user = User.from(login, name, email, password);
+			}
+			userRepository.save(user);
 			return "OK";
 		} catch (Exception e) {
 			return "ERROR";

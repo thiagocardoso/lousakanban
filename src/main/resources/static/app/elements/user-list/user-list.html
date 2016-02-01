@@ -26,16 +26,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         		<paper-item-body>
         			<div>{{item.login}}</div>
         		</paper-item-body>
-        		<paper-icon-button icon="create" alt="Editar" on-click="edit"></paper-icon-button>
+        		<paper-icon-button icon="create" alt="Editar" on-click="userEdit"></paper-icon-button>
         		<paper-icon-button icon="delete" alt="Remover" on-click="userDelete"></paper-icon-button>
         	</paper-item>
     	</template>
     </paper-listbox>
     
-    <paper-button on-click="openDialog">Novo</paper-button>
+    <paper-button on-click="newUser">Novo</paper-button>
   	
   	<paper-dialog id="formdialog" modal>
-  		<user-form></user-form>
+  		<user-form user="{{user}}"></user-form>
   	</paper-dialog>
   </template>
 
@@ -45,6 +45,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   
       Polymer({
         is: 'user-list',
+        properties: {
+        	user: {
+        		type: Object,
+        		notify: true
+        	}
+        },
         ready: function() {
         },
         openDialog: function() {
@@ -55,7 +61,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         	document.getElementById("formdialog").close();
         },
         userDelete: function(e) {
-//         	$.post("/ws/users/delete", JSON.stringify(e.model.item), , "json");
         	$.ajax({
         		  type: "POST",
         		  contentType: "application/json",
@@ -65,7 +70,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               		document.getElementById("ajax").generateRequest();
               	  }
         		});
-//         	console.log('You pressed user ' + e.model.item.id);
+        },
+        userEdit: function(e) {
+        	this.user = e.model.item;
+        	this.openDialog();
+        },
+        newUser: function() {
+        	this.user = null;
+        	this.openDialog();
         }
       });
     })();
