@@ -26,6 +26,9 @@ public class Team {
 	@DBRef
 	private List<User> users = Lists.newLinkedList();
 
+	public Team() {
+	}
+	
 	public Team(String name) {
 		checkNotNull(name);
 		checkArgument(isNotEmpty(name));
@@ -36,6 +39,14 @@ public class Team {
 		return new Team(name);
 	}
 
+	public String getId() {
+		return this.id;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public String getName() {
 		return name;
 	}
