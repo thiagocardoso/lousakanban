@@ -1,0 +1,85 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="task-list">
+  <template>
+  	<iron-ajax 
+  		auto
+  		id="ajax"  
+    	url="/ws/tasks/list"
+    	handle-as="json"
+    	last-response="{{tasks}}"></iron-ajax>
+
+    <iron-signals on-iron-signal-dialog-closed="dialogClosed"></iron-signals>
+    
+   	<paper-listbox>
+    	<template is="dom-repeat" items="{{tasks}}">
+        	<paper-item>
+        		<paper-item-body>
+        			<div>{{item.title}}</div>
+        		</paper-item-body>
+        		<paper-icon-button icon="create" alt="Editar" on-click="taskEdit"></paper-icon-button>
+        		<paper-icon-button icon="delete" alt="Remover" on-click="taskDelete"></paper-icon-button>
+        	</paper-item>
+    	</template>
+    </paper-listbox>
+    
+    <paper-button on-click="newTask">Novo</paper-button>
+  	
+  	<paper-dialog id="formdialog" modal>
+  		<task-form task="{{task}}"></task-form>
+  	</paper-dialog>
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+  
+      Polymer({
+        is: 'task-list',
+        properties: {
+        	task: {
+        		type: Object,
+        		notify: true
+        	}
+        },
+        ready: function() {
+        },
+        openDialog: function() {
+        	document.getElementById("formdialog").open();
+        },
+        dialogClosed: function() {
+        	document.getElementById("ajax").generateRequest();
+        	document.getElementById("formdialog").close();
+        },
+        taskDelete: function(e) {
+        	$.ajax({
+        		  type: "POST",
+        		  contentType: "application/json",
+        		  url: "/ws/tasks/delete",
+        		  data: JSON.stringify(e.model.item),
+        		  complete: function (data) {
+              		document.getElementById("ajax").generateRequest();
+              	  }
+        		});
+        },
+        taskEdit: function(e) {
+        	this.user = e.model.item;
+        	this.openDialog();
+        },
+        newTask: function() {
+        	this.task = null;
+        	this.openDialog();
+        }
+      });
+    })();
+  </script>
+</dom-module>

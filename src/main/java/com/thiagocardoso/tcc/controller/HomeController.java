@@ -15,4 +15,14 @@ public class HomeController {
 	public String users() {
 		return "users/index";
 	}
+	
+	@RequestMapping("/teams")
+	public String teams() {
+		return "teams/index";
+	}
+	
+	@RequestMapping("/tasks")
+	public String tasks() {
+		return "tasks/index";
+	}
 }
