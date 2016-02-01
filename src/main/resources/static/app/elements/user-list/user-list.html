@@ -26,6 +26,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         		<paper-item-body>
         			<div>{{item.login}}</div>
         		</paper-item-body>
+        		<paper-icon-button icon="create" alt="Editar" on-click="edit"></paper-icon-button>
+        		<paper-icon-button icon="delete" alt="Remover" on-click="userDelete"></paper-icon-button>
         	</paper-item>
     	</template>
     </paper-listbox>
@@ -51,6 +53,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         dialogClosed: function() {
         	document.getElementById("ajax").generateRequest();
         	document.getElementById("formdialog").close();
+        },
+        userDelete: function(e) {
+//         	$.post("/ws/users/delete", JSON.stringify(e.model.item), , "json");
+        	$.ajax({
+        		  type: "POST",
+        		  contentType: "application/json",
+        		  url: "/ws/users/delete",
+        		  data: JSON.stringify(e.model.item),
+        		  complete: function (data) {
+              		document.getElementById("ajax").generateRequest();
+              	  }
+        		});
+//         	console.log('You pressed user ' + e.model.item.id);
         }
       });
     })();
