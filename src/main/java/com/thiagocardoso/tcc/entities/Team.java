@@ -57,7 +57,8 @@ public class Team {
 	
 	public Team addUser(User user) {
 		checkNotNull(user);
-		this.users.add(user);
+		if(!this.users.contains(user))
+			this.users.add(user);
 		return this;
 	}
 	

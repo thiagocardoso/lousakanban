@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.thiagocardoso.tcc.entities.Team;
 import com.thiagocardoso.tcc.entities.User;
+import com.thiagocardoso.tcc.repository.TeamRepository;
 import com.thiagocardoso.tcc.repository.UserRepository;
 
 @RestController
@@ -18,6 +20,9 @@ public class UserController {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	TeamRepository teamRepository;
 
 	@RequestMapping("list")
 	public List<User> list() {
@@ -26,7 +31,7 @@ public class UserController {
 
 	@RequestMapping(value = "save", method = RequestMethod.POST)
 	public String save(@RequestParam("login") String login, @RequestParam("name") String name,
-			@RequestParam("email") String email, @RequestParam("password") String password) {
+			@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("team") String teamId) {
 		try {
 			User user = userRepository.findByLogin(login);
 			if(user!=null) {
@@ -36,6 +41,11 @@ public class UserController {
 			}else{
 				user = User.from(login, name, email, password);
 			}
+			
+			Team team = teamRepository.findOne(teamId);
+//			team.addUser(user);
+			user.setTeam(team);
+			
 			userRepository.save(user);
 			return "OK";
 		} catch (Exception e) {

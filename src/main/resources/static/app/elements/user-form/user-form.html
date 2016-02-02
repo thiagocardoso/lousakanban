@@ -16,6 +16,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
+     	<iron-ajax 
+  		auto
+  		id="ajax"  
+    	url="/ws/teams/list"
+    	handle-as="json"
+    	last-response="{{teams}}"></iron-ajax>
+
     <paper-card heading="Novo Usuário">
 		<form is="iron-form" id="form" method="post" action="/ws/users/save">
 		<div class="card-content">
@@ -23,6 +30,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				<paper-input name="name" value="{{user.name}}" label="Nome" required error-message="Necessário informar um nome de usuário!"></paper-input>
 				<paper-input name="email" value="{{user.email}}" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" label="E-mail" required error-message="Necessário informar um e-mail válido!"></paper-input>
 				<paper-input name="password" value="{{user.password}}" label="Senha" type="password" required error-message="Necessário informar uma senha válida!"></paper-input>
+				
+				<paper-dropdown-menu label="Time" selected-item="{{selected}}">
+        			<paper-menu class="dropdown-content">
+            		<template is="dom-repeat" items="{{teams}}" as="team">
+                		<paper-item value="{{team.id}}">{{team.name}}</paper-item>
+            		</template>
+        			</paper-menu>
+    			</paper-dropdown-menu>
+    			<input is="iron-input" name="team" type="hidden" value="[[selected.value]]">
 		</div>
 		<div class="card-actions">
 			<paper-button on-click="doSubmit">Salvar</paper-button>
