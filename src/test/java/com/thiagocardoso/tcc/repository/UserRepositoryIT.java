@@ -59,7 +59,7 @@ public class UserRepositoryIT {
 	@Test
 	public void userWithTask() {
 		User user = User.from("teste", "Usuario teste", "teste@teste.com", "teste");
-		Task.Builder.of("Teste!").build().assign(user);
+		Task.from(user, "Teste!", "");
 		repository.save(user);
 		
 		User userSaved = repository.findByLogin("teste");		

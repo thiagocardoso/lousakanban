@@ -2,6 +2,7 @@ package com.thiagocardoso.tcc.entities;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -12,7 +13,9 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 @Document
-public class User {
+public class User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String id;
@@ -20,6 +23,7 @@ public class User {
 	private String login;
 	private String email;
 	private String password;
+	
 	private List<Task> tasks = Lists.newLinkedList();
 
 	private Team team;

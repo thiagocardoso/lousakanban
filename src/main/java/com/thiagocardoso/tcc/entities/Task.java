@@ -2,54 +2,37 @@ package com.thiagocardoso.tcc.entities;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.google.common.base.Objects;
-import com.google.common.base.Preconditions;
 
-public class Task {
+@Document
+public class Task implements Serializable {
 
-	public static class Builder {
-		private String title;
-		
-		private String description;
-		
-		private Date createdAt = new Date();
-		
-		private Date updatedAt = new Date();
-		
-		Builder(String title) {
-			Preconditions.checkNotNull(title);
-			this.title = title;
-		}
-		
-		public static Builder of(String title) {
-			return new Builder(title);
-		}
-		
-		public Builder description(String description) {
-			this.description = description;
-			return this;
-		}
+	private static final long serialVersionUID = 1L;
 
-		public Task build() {
-			return new Task(title, description, createdAt, updatedAt);
-		}
+	private String title;
+	
+	private String description;
+	
+	private Date createdAt = new Date();
+	
+	private Date updatedAt = new Date();
+	
+	Task() {
 	}
 	
-	private final String title;
-	
-	private final String description;
-	
-	private final Date createdAt;
-	
-	private final Date updatedAt;
-
-	Task(String title, String description, Date createdAt, Date updatedAt){
+	Task(User user, String title, String description){
 		this.title = title;
 		this.description = description;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
+		this.assign(user);
+	}
+	
+	public static Task from(User user, String title, String description) {
+		return new Task(user, title, description);
 	}
 	
 	public Task assign(User user) {
@@ -62,16 +45,16 @@ public class Task {
 		return this.title;
 	}
 	
-	public User getUser() {
-		return this.getUser();
-	}
-	
 	public Date getCreatedAt() {
 		return this.createdAt;
 	}
 	
 	public Date getUpdatedAt() {
 		return this.updatedAt;
+	}
+	
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 	
 	public String getDescription() {

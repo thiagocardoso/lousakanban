@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.thiagocardoso.tcc.entities.Team;
 import com.thiagocardoso.tcc.entities.User;
 import com.thiagocardoso.tcc.repository.TeamRepository;
 import com.thiagocardoso.tcc.repository.UserRepository;
@@ -41,11 +40,7 @@ public class UserController {
 			}else{
 				user = User.from(login, name, email, password);
 			}
-			
-			Team team = teamRepository.findOne(teamId);
-//			team.addUser(user);
-			user.setTeam(team);
-			
+			user.setTeam(teamRepository.findOne(teamId));
 			userRepository.save(user);
 			return "OK";
 		} catch (Exception e) {

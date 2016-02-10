@@ -9,36 +9,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.common.collect.Lists;
 import com.thiagocardoso.tcc.entities.Task;
-import com.thiagocardoso.tcc.repository.TaskRepository;
+import com.thiagocardoso.tcc.entities.User;
+import com.thiagocardoso.tcc.repository.UserRepository;
 
 @RestController
 @RequestMapping("/ws/tasks")
 public class TaskController {
 
 	@Autowired
-	TaskRepository taskRepository;
-
+	UserRepository userRepository;
+	
 	@RequestMapping("list")
 	public List<Task> list() {
-		return taskRepository.findAll();
+		List<User> users = userRepository.findAll();
+		List<Task> tasks = Lists.newArrayList();
+		users.stream().forEach(u -> tasks.addAll(u.getTasks()));
+		return tasks;
 	}
 
 	@RequestMapping(value = "save", method = RequestMethod.POST)
-	public String save(@RequestParam("title") String title) {
+	public String save(@RequestParam("userLogin") String userLogin, @RequestParam("title") String title, @RequestParam("description") String description) {
 		try {
-//			User user = userRepository.findByLogin(login);
-//			if(user!=null) {
-//				user.setName(name);
-//				user.setEmail(email);
-//				user.setPassword(password);
-//			}else{
-//				user = User.from(login, name, email, password);
-//			}
-			
-			Task task = Task.Builder.of(title).build();
-			
-			taskRepository.save(task);
+			User user = userRepository.findByLogin(userLogin);
+			Task.from(user, title, description);
+			userRepository.save(user);
 			return "OK";
 		} catch (Exception e) {
 			return "ERROR";
@@ -47,7 +43,7 @@ public class TaskController {
 	
 	@RequestMapping(value = "delete", method = RequestMethod.POST)
 	public void delete(@RequestBody Task task) {
-		taskRepository.delete(task);
+//		taskRepository.delete(task);
 	}
 	
 }

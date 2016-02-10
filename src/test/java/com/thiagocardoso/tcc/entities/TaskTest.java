@@ -10,16 +10,21 @@ public class TaskTest {
 
 	@Test
 	public void createTaskToUser() {
-		final Task task = Task.Builder.of(TITLE_TASK_1).build();
+		final Task task = Task.from(newUser(), TITLE_TASK_1, "");
 		assertNotNull(task);
 		assertEquals(TITLE_TASK_1, task.getTitle());
 	}
 	
 	@Test
 	public void twoEqualTasksToSameUser() {
-		final Task task1 = Task.Builder.of(TITLE_TASK_1).build();
-		final Task task2 = Task.Builder.of(TITLE_TASK_1).build();
+		User user = newUser();
+		final Task task1 = Task.from(user, TITLE_TASK_1, "");
+		final Task task2 = Task.from(user, TITLE_TASK_1, "");
 		assertEquals(task1, task2);
+	}
+
+	private User newUser() {
+		return User.from("a", "a", "a", "");
 	}
 	
 }

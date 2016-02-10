@@ -16,14 +16,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
+    <iron-ajax 
+  		auto
+  		id="ajax"  
+    	url="/ws/users/list"
+    	handle-as="json"
+    	last-response="{{users}}"></iron-ajax>
     <paper-card heading="Tarefa">
 		<form is="iron-form" id="form" method="post" action="/ws/tasks/save">
 		<div class="card-content">
 				<paper-input name="title" value="{{task.title}}" label="Título" required error-message="Necessário informar um título!"></paper-input>
-<!-- 				<paper-input name="login" value="{{task.login}}" label="Login" readonly="{{task.login}}" required error-message="Necessário informar um login de usuário!"></paper-input> -->
-<!-- 				<paper-input name="name" value="{{task.name}}" label="Nome" required error-message="Necessário informar um nome de usuário!"></paper-input> -->
-<!-- 				<paper-input name="email" value="{{task.email}}" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" label="E-mail" required error-message="Necessário informar um e-mail válido!"></paper-input> -->
-<!-- 				<paper-input name="password" value="{{task.password}}" label="Senha" type="password" required error-message="Necessário informar uma senha válida!"></paper-input> -->
+				<paper-textarea name="description" value="{{task.description}}" label="Descricão"></paper-textarea>
+				<paper-dropdown-menu label="Usuário" selected-item="{{selected}}">
+        			<paper-menu class="dropdown-content">
+            		<template is="dom-repeat" items="{{users}}" as="user">
+                		<paper-item value="{{user.login}}">{{user.name}}</paper-item>
+            		</template>
+        			</paper-menu>
+    			</paper-dropdown-menu>
+    			<input is="iron-input" name="userLogin" type="hidden" value="[[selected.value]]">
 		</div>
 		<div class="card-actions">
 			<paper-button on-click="doSubmit">Salvar</paper-button>
