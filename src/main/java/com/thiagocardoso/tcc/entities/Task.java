@@ -12,28 +12,6 @@ import com.google.common.base.Objects;
 @Document
 public class Task implements Serializable {
 
-	public enum Status {
-		ABERTO("Aberto"), 
-		DESENVOLVENDO("Desenvolvendo"), 
-		RESOLVIDO("Resolvido"), 
-		CANCELADO("Cancelado");
-		
-		private String description;
-
-		Status(String description) {
-			this.description = description;
-		}
-		
-		public String getDescription() {
-			return this.description;
-		}
-		
-		@Override
-		public String toString() {
-			return this.description;
-		}
-	}
-	
 	private static final long serialVersionUID = 1L;
 
 	private String title;
