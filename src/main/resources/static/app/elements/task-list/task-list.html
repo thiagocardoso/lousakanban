@@ -10,6 +10,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <dom-module id="task-list">
+  <style>
+  	
+  </style>
   <template>
   	<iron-ajax 
   		auto
@@ -54,11 +57,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         ready: function() {
         },
         openDialog: function() {
-        	document.getElementById("formdialog").open();
+        	this.$.formdialog.open();
         },
         dialogClosed: function() {
-        	document.getElementById("ajax").generateRequest();
-        	document.getElementById("formdialog").close();
+        	this.$.ajax.generateRequest();
+        	this.$.formdialog.close();
         },
         taskDelete: function(e) {
         	$.ajax({

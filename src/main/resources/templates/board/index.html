@@ -34,6 +34,9 @@
   <!-- build:css styles/main.css -->
   <link rel="stylesheet" href="/app/styles/main.css" />
   <!-- endbuild-->
+  
+  <link rel="stylesheet" href="/app/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/app/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" />
 
   <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
   <script src="/app/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
@@ -51,8 +54,21 @@
 
 <body>
   <template is="dom-bind" id="app">
-  	<task-list></task-list>
-  
+	<paper-drawer-panel>
+  		<div drawer>
+  			<div class="row" style="background-color: #000;">
+  				<div class="col-md-4 logomenu" style="top: 10px;"></div>
+  				xxxx
+  				xxxx
+  				xxxx
+  			</div>
+  		</div>
+  		
+  		<div main>
+  			
+  		</div>
+	</paper-drawer-panel>
+	  
   	<paper-toast id="toast">
   		<span class="toast-hide-button" role="button" tabindex="0" onclick="app.$.toast.hide()">Ok</span>
   	</paper-toast>

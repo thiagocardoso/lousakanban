@@ -48,6 +48,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     page('/contact', scrollToTop, function() {
       app.route = 'contact';
     });
+    
+    page('/tasks', scrollToTop, function() {
+      app.route = 'tasks';
+    });
 
     page('*', function() {
       app.$.toast.text = 'Can\'t find: ' + window.location.href  + '. Redirected you to Home Page';
@@ -57,7 +61,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     // add #! before urls
     page({
-      hashbang: true
+      hashbang: false
     });
 
   });
