@@ -8,9 +8,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 */
 
 body {
-  background: #fafafa;
+  background: #EDEDED;
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #333;
+  margin: 0;
+  padding: 0;
 }
 
 #logomenu {
