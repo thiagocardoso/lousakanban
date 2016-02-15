@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.google.common.base.MoreObjects;
@@ -29,6 +30,16 @@ public class User implements Serializable {
 	private Team team;
 	
 	User(){
+	}
+	
+	@PersistenceConstructor
+	User(String id, String login, String name, String email, String password, List<Task> tasks) {
+		this(id, login, name, email, password);
+		this.tasks = tasks;
+		
+		for (Task task : tasks) {
+			task.setUser(this);
+		}
 	}
 	
 	User(String id, String login, String name, String email, String password) {

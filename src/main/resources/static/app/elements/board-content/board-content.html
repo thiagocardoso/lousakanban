@@ -15,19 +15,62 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
         margin: 5px;
+        text-align: center;
       } 
       
       paper-material.column-container {
       	position: relative;
-      	display: block;
+      	display: inline-table;
         min-height: 300px;
-        background-color: #C6D6C1;
-        width: 30%;
+        background-color: #DAE8D5;
+        width: 32%;
+        margin: 5px;
+      }
+          
+      paper-material.sub-column-container {
+      	position: relative;
+      	display: inline-block;
+        min-height: 250px;
+        background-color: #C6DEBF;
+        width: 47%;
+        margin: 5px;
       }    
       
+      span.column-header {
+      	display: block;
+      	background-color: #B8CCB1;
+      	padding-top: 5px;
+      	font-family: arial;
+      	font-weight: bold; 
+      }
     </style>
-    <paper-material class="column-container" elevation="1">
-    	TESTE
+    <iron-ajax 
+  		auto
+  		id="ajax"  
+    	url="/ws/tasks/list"
+    	handle-as="json"
+    	last-response="{{tasks}}"></iron-ajax>
+    
+    <paper-material id="aberto" class="column-container" elevation="1">
+    	<span class="column-header">ABERTO</span>
+    	<template is="dom-repeat" items="{{tasksAbertas}}">
+    		
+    	</template>
+    </paper-material>
+
+    <paper-material id="desenvolvendo" class="column-container" elevation="1">
+    	<span class="column-header">DESENVOLVENDO</span>
+    </paper-material>
+
+    <paper-material id="finalizado" class="column-container" elevation="1">
+    	<span class="column-header">FINALIZADO</span>
+    	<paper-material id="resolvido" class="sub-column-container" elevation="0">
+    		<span class="column-header">RESOLVIDO</span>
+	    </paper-material>
+
+    	<paper-material id="cancelado" class="sub-column-container" elevation="0">
+    		<span class="column-header">CANCELADO</span>
+	    </paper-material>
     </paper-material>
   </template>
 
@@ -40,6 +83,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         properties: {
         },
         ready: function() {
+        },
+        taskByStatus: function(status) {
+        	return tasks.filter(function (el) {
+        		  return el.status===status;
+        	});
+        },
+        tasksAbertas: function() {
+        	return taskByStatus("ABERTO");
+        },
+        tasksEmDesenvolvimento: function() {
+        	return taskByStatus("DESENVOLVENDO");
+        },
+        tasksResolvidas: function() {
+        	return taskByStatus("RESOLVIDO");
+        },
+        tasksCanceladas: function() {
+        	return taskByStatus("CANCELADO");
         }
       });
     })();

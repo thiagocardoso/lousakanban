@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.google.common.base.Objects;
@@ -23,6 +24,9 @@ public class Task implements Serializable {
 	private Date updatedAt = new Date();
 	
 	private Status status = Status.ABERTO;
+	
+	@Transient
+	private User user;
 	
 	Task() {
 	}
@@ -69,6 +73,14 @@ public class Task implements Serializable {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override
