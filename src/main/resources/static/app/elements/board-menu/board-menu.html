@@ -24,15 +24,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
       div.logo {
       	position: relative;
-      	display: block;
+      	display: inline-block;
       	width: 254px;
       	height: 36px;
       	background-image: url('/app/images/logo2_small.png');
       }
+      
+      paper-button.nova-tarefa {
+      	position: relative;
+      	display: inline-block;
+      	height: 36px;
+      	top: -15px;
+      	font-family: arial;
+      	font-size: 12px;
+      	font-weight: bold;
+      	color: #fff;
+      	margin-left: 10px;
+      }
+      
+      .texto-botao {
+      	vertical-align: sub;
+      }
     </style>
     <paper-material class="menu-container" elevation="2">
     	<div class="logo"></div>
+    	<paper-button class="nova-tarefa" on-click="openNewTask"><span class="texto-botao">Nova Tarefa</span></paper-button>
     </paper-material>
+    
+    <iron-signals on-iron-signal-dialog-closed="dialogClosed"></iron-signals>
+    <paper-dialog id="dialog"></paper-dialog>
   </template>
 
   <script>
@@ -44,6 +64,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         properties: {
         },
         ready: function() {
+        },
+        clearDialog: function() {
+         	$("#dialog").empty();
+        },
+        dialogClosed: function() {
+        	this.$.dialog.close();
+        },
+        openNewTask: function() {
+        	this.clearDialog();
+        	$("#dialog").append("<task-form></task-form>");
+        	this.$.dialog.open();
         }
       });
     })();
