@@ -37,9 +37,9 @@ public class User implements Serializable {
 		this(id, login, name, email, password);
 		this.tasks = tasks;
 		
-		for (Task task : tasks) {
-			task.setUser(this);
-		}
+//		for (Task task : tasks) {
+//			task.setUser(this);
+//		}
 	}
 	
 	User(String id, String login, String name, String email, String password) {

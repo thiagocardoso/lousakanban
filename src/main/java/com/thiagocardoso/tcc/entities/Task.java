@@ -25,8 +25,8 @@ public class Task implements Serializable {
 	
 	private Status status = Status.ABERTO;
 	
-	@Transient
-	private User user;
+//	@Transient
+//	private User user;
 	
 	Task() {
 	}
@@ -75,13 +75,13 @@ public class Task implements Serializable {
 		this.status = status;
 	}
 
-	public User getUser() {
-		return user;
-	}
+//	public User getUser() {
+//		return user;
+//	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
 
 	@Override
 	public boolean equals(Object obj) {

@@ -53,23 +53,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     <paper-material id="aberto" class="column-container" elevation="1">
     	<span class="column-header">ABERTO</span>
-    	<template is="dom-repeat" items="{{tasksAbertas}}">
-    		
+    	<template is="dom-repeat" items="{{abertas}}">
+    		<paper-card heading="{{item.title}}">
+    			<div class="card-content">{{item.description}}</div>
+    		</paper-card>
     	</template>
     </paper-material>
 
     <paper-material id="desenvolvendo" class="column-container" elevation="1">
     	<span class="column-header">DESENVOLVENDO</span>
+    	<template is="dom-repeat" items="{{desenvolvendo}}">
+    		<paper-card heading="{{item.title}}">
+    			<div class="card-content">{{item.description}}</div>
+    		</paper-card>
+    	</template>
     </paper-material>
 
     <paper-material id="finalizado" class="column-container" elevation="1">
     	<span class="column-header">FINALIZADO</span>
     	<paper-material id="resolvido" class="sub-column-container" elevation="0">
     		<span class="column-header">RESOLVIDO</span>
+    		<template is="dom-repeat" items="{{resolvidas}}">
+    		<paper-card heading="{{item.title}}">
+    			<div class="card-content">{{item.description}}</div>
+    		</paper-card>
+    	</template>
 	    </paper-material>
 
     	<paper-material id="cancelado" class="sub-column-container" elevation="0">
     		<span class="column-header">CANCELADO</span>
+    		<template is="dom-repeat" items="{{canceladas}}">
+    		<paper-card heading="{{item.title}}">
+    			<div class="card-content">{{item.description}}</div>
+    		</paper-card>
+    	</template>
 	    </paper-material>
     </paper-material>
   </template>
@@ -81,25 +98,58 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Polymer({
         is: 'board-content',
         properties: {
+        	tasks: {
+              type: Object,
+              notify: true,
+              observer: "filtraTasks"
+            },
+        	abertas: {
+              type: Object,
+              notify: true
+            },
+        	desenvolvendo: {
+              type: Object,
+              notify: true
+            },
+        	resolvidas: {
+              type: Object,
+              notify: true
+            },
+        	canceladas: {
+              type: Object,
+              notify: true
+            }
         },
         ready: function() {
+        	this.$.ajax.generateRequest();
+        },
+        filtraTasks: function() {
+        	if(this.tasks && this.tasks.length>0){
+        		this.abertas = this.tasksAbertas();
+        		this.desenvolvendo = this.tasksEmDesenvolvimento();
+        		this.resolvidas = this.tasksResolvidas();
+        		this.canceladas = this.tasksCanceladas();
+        	}
         },
         taskByStatus: function(status) {
-        	return tasks.filter(function (el) {
+        	return this.tasks.filter(function (el) {
         		  return el.status===status;
         	});
         },
+        handleResponse: function(e) {
+        	alert(e);
+        },
         tasksAbertas: function() {
-        	return taskByStatus("ABERTO");
+        	return this.taskByStatus("ABERTO");
         },
         tasksEmDesenvolvimento: function() {
-        	return taskByStatus("DESENVOLVENDO");
+        	return this.taskByStatus("DESENVOLVENDO");
         },
         tasksResolvidas: function() {
-        	return taskByStatus("RESOLVIDO");
+        	return this.taskByStatus("RESOLVIDO");
         },
         tasksCanceladas: function() {
-        	return taskByStatus("CANCELADO");
+        	return this.taskByStatus("CANCELADO");
         }
       });
     })();
