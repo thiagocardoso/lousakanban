@@ -49,6 +49,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-material class="menu-container" elevation="2">
     	<div class="logo"></div>
     	<paper-button class="nova-tarefa" on-click="openNewTask"><span class="texto-botao">Nova Tarefa</span></paper-button>
+    	<paper-button class="nova-tarefa" on-click="openUsers"><span class="texto-botao">Usuários</span></paper-button>
+    	<paper-button class="nova-tarefa" on-click="openTeams"><span class="texto-botao">Times</span></paper-button>
     </paper-material>
     
     <iron-signals on-iron-signal-dialog-closed="dialogClosed"></iron-signals>
@@ -68,13 +70,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         clearDialog: function() {
          	$("#dialog").empty();
         },
+        openDialog: function(content) {
+        	this.clearDialog();
+        	$("#dialog").append(content);
+        	this.$.dialog.open();
+        },
         dialogClosed: function() {
         	this.$.dialog.close();
         },
         openNewTask: function() {
-        	this.clearDialog();
-        	$("#dialog").append("<task-form></task-form>");
-        	this.$.dialog.open();
+        	this.openDialog("<task-form></task-form>");
+        },
+        openUsers: function() {
+        	this.openDialog("<user-list></user-list>");
+        },
+        openTeams: function() {
+        	this.openDialog("<team-list></team-list>");
         }
       });
     })();
