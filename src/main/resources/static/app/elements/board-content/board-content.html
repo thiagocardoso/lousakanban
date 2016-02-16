@@ -54,21 +54,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     <iron-signals on-iron-signal-refresh-issues="refreshIssues"></iron-signals>
     
-    <paper-material id="aberto" class="column-container" elevation="1">
+    <paper-material id="aberto" class="column-container droppable" elevation="1">
     	<span class="column-header">ABERTO</span>
     	<template is="dom-repeat" items="{{abertas}}">
-    		<paper-card heading="{{item.title}}">
-    			<div class="card-content">{{item.description}}</div>
-    		</paper-card>
+    		<board-item task="{{item}}"></board-item>
     	</template>
     </paper-material>
 
-    <paper-material id="desenvolvendo" class="column-container" elevation="1">
+    <paper-material id="desenvolvendo" class="column-container droppable" elevation="1">
     	<span class="column-header">DESENVOLVENDO</span>
     	<template is="dom-repeat" items="{{desenvolvendo}}">
-    		<paper-card heading="{{item.title}}">
-    			<div class="card-content">{{item.description}}</div>
-    		</paper-card>
+			<board-item task="{{item}}"></board-item>
     	</template>
     </paper-material>
 
@@ -77,19 +73,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     	<paper-material id="resolvido" class="sub-column-container" elevation="0">
     		<span class="column-header">RESOLVIDO</span>
     		<template is="dom-repeat" items="{{resolvidas}}">
-    		<paper-card heading="{{item.title}}">
-    			<div class="card-content">{{item.description}}</div>
-    		</paper-card>
-    	</template>
+    			<board-item task="{{item}}"></board-item>
+    		</template>
 	    </paper-material>
 
     	<paper-material id="cancelado" class="sub-column-container" elevation="0">
     		<span class="column-header">CANCELADO</span>
     		<template is="dom-repeat" items="{{canceladas}}">
-    		<paper-card heading="{{item.title}}">
-    			<div class="card-content">{{item.description}}</div>
-    		</paper-card>
-    	</template>
+    			<board-item task="{{item}}"></board-item>
+    		</template>
 	    </paper-material>
     </paper-material>
   </template>
@@ -125,6 +117,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         ready: function() {
         	this.$.ajax.generateRequest();
+        	this.setupDragAndDrop();
+        },
+        setupDragAndDrop: function() {
+        	interact('.draggable')
+        	  .draggable({
+        	    // enable inertial throwing
+        	    inertia: true,
+        	    onmove: dragMoveListener
+        	  });
         },
         refreshIssues: function() {
         	this.$.ajax.generateRequest();
@@ -159,5 +160,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       });
     })();
+    
+    dragMoveListener: function dragMoveListener (event) {
+        var target = event.target,
+            // keep the dragged position in the data-x/data-y attributes
+            x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+            y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+        // translate the element
+        target.style.webkitTransform =
+        target.style.transform =
+          'translate(' + x + 'px, ' + y + 'px)';
+
+        // update the posiion attributes
+        target.setAttribute('data-x', x);
+        target.setAttribute('data-y', y);
+    }
   </script>
 </dom-module>

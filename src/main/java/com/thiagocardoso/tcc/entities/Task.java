@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -25,11 +26,23 @@ public class Task implements Serializable {
 	
 	private Status status = Status.ABERTO;
 	
-//	@Transient
-//	private User user;
-	
-	Task() {
+	@Transient
+	private String userLogin;
+
+	@Transient
+	private String descriptionAbrev;
+
+	@PersistenceConstructor
+	Task(String title, String description, Date createdAt, Date updatedAt, Status status) {
+		this.title = title;
+		this.description = description;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.status = status;
+		this.setDescriptionAbrev(buildDescriptionAbre(description));
 	}
+
+	Task() {}
 	
 	Task(User user, String title, String description){
 		this.title = title;
@@ -75,13 +88,21 @@ public class Task implements Serializable {
 		this.status = status;
 	}
 
-//	public User getUser() {
-//		return user;
-//	}
+	public String getUserLogin() {
+		return userLogin;
+	}
 
-//	public void setUser(User user) {
-//		this.user = user;
-//	}
+	public void setUserLogin(String userLogin) {
+		this.userLogin = userLogin;
+	}
+
+	public String getDescriptionAbrev() {
+		return descriptionAbrev;
+	}
+
+	public void setDescriptionAbrev(String descriptionAbrev) {
+		this.descriptionAbrev = descriptionAbrev;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -95,5 +116,15 @@ public class Task implements Serializable {
 	@Override
 	public int hashCode() {
 		return super.hashCode();
+	}
+	
+	private String buildDescriptionAbre(String description) {
+		if (description == null)
+			return null;
+		
+		if (description.length() > 50)
+			return description.substring(0, 50) + "...";
+		
+		return description;
 	}
 }
