@@ -52,6 +52,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     	handle-as="json"
     	last-response="{{tasks}}"></iron-ajax>
     
+    <iron-signals on-iron-signal-refresh-issues="refreshIssues"></iron-signals>
+    
     <paper-material id="aberto" class="column-container" elevation="1">
     	<span class="column-header">ABERTO</span>
     	<template is="dom-repeat" items="{{abertas}}">
@@ -122,6 +124,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
         },
         ready: function() {
+        	this.$.ajax.generateRequest();
+        },
+        refreshIssues: function() {
         	this.$.ajax.generateRequest();
         },
         filtraTasks: function() {
