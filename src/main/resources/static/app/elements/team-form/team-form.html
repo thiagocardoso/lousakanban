@@ -52,6 +52,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         closeDialog: function() {
         	this.fire("iron-signal", {name: 'dialog-closed', data: null});
+        	this.fire("iron-signal", {name: 'dialog-menu-closed', data: null});
         }
       });
     })();

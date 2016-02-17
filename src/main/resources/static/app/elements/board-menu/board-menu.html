@@ -45,6 +45,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .texto-botao {
       	vertical-align: sub;
       }
+      
+      #dialog {
+      	width: 600px;
+		height: 400px;
+      }
     </style>
     <paper-material class="menu-container" elevation="2">
     	<div class="logo"></div>
@@ -53,7 +58,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     	<paper-button class="nova-tarefa" on-click="openTeams"><span class="texto-botao">Times</span></paper-button>
     </paper-material>
     
-    <iron-signals on-iron-signal-dialog-closed="dialogClosed"></iron-signals>
+    <iron-signals on-iron-signal-dialog-menu-closed="dialogClosed"></iron-signals>
     <paper-dialog id="dialog"></paper-dialog>
   </template>
 

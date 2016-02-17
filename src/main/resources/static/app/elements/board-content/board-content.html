@@ -61,7 +61,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     	</template>
     </paper-material>
 
-    <paper-material id="desenvolvendo" class="column-container droppable" elevation="1">
+    <paper-material id="desenvolvendo" class="column-container drop-desenvolvendo" elevation="1">
     	<span class="column-header">DESENVOLVENDO</span>
     	<template is="dom-repeat" items="{{desenvolvendo}}">
 			<board-item task="{{item}}"></board-item>
@@ -123,9 +123,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         	interact('.draggable')
         	  .draggable({
         	    // enable inertial throwing
-        	    inertia: true,
+//         	    inertia: true,
         	    onmove: dragMoveListener
         	  });
+        	
+        	interact('.drop-desenvolvendo').dropzone({
+        		  accept: '.aberta',
+        		  overlap: 0.75,
+        		  ondrop: function (event) {
+        			 alert("dropped");
+        		  }
+        	});
         },
         refreshIssues: function() {
         	this.$.ajax.generateRequest();

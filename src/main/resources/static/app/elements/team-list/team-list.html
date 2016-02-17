@@ -11,6 +11,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="team-list">
   <template>
+  	<style>
+  		:host {
+  			display: block;
+  			width: 100%;
+  		}
+  	</style>
   	<iron-ajax 
   		auto
   		id="ajax"  
@@ -20,19 +26,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <iron-signals on-iron-signal-dialog-closed="dialogClosed"></iron-signals>
     
-   	<paper-listbox>
-    	<template is="dom-repeat" items="{{teams}}">
-        	<paper-item>
-        		<paper-item-body>
-        			<div>{{item.name}}</div>
-        		</paper-item-body>
-        		<paper-icon-button icon="create" alt="Editar" on-click="teamEdit"></paper-icon-button>
-        		<paper-icon-button icon="delete" alt="Remover" on-click="teamDelete"></paper-icon-button>
-        	</paper-item>
-    	</template>
-    </paper-listbox>
-    
-    <paper-button on-click="newteam">Novo</paper-button>
+    <div class="list-content">
+	   	<paper-listbox>
+	    	<template is="dom-repeat" items="{{teams}}">
+	        	<paper-item style="margin: 2px; background-color: #E5F0E1">
+	        		<paper-item-body>
+	        			<div>{{item.name}}</div>
+	        		</paper-item-body>
+	        		<div class="item-buttons">
+	        			<paper-icon-button icon="create" alt="Editar" on-click="teamEdit"></paper-icon-button>
+	        			<paper-icon-button icon="delete" alt="Remover" on-click="teamDelete"></paper-icon-button>
+	        		</div>
+	        	</paper-item>
+	    	</template>
+	    </paper-listbox>
+    </div>
+    <div class="item-buttons">
+    	<paper-button class="novo-button" on-click="newteam">Novo</paper-button>
+  	</div>
   	
   	<paper-dialog id="formdialog" modal>
   		<team-form team="{{team}}"></team-form>

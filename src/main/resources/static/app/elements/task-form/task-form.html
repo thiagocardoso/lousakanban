@@ -14,6 +14,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: block;
+        width: 100%;
+      }
+      
+      paper-card {
+      	width: 100%;
       }
     </style>
     <iron-ajax 
@@ -26,7 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		<form is="iron-form" id="form" method="post" action="/ws/tasks/save">
 		<div class="card-content">
 				<paper-input name="title" value="{{task.title}}" label="Título" required error-message="Necessário informar um título!"></paper-input>
-				<paper-textarea name="description" value="{{task.description}}" label="Descricão"></paper-textarea>
+				<paper-textarea name="description" rows=3 maxRows=3 value="{{task.description}}" label="Descricão"></paper-textarea>
 				<paper-dropdown-menu label="Usuário" selected-item="{{selected}}">
         			<paper-menu class="dropdown-content">
             		<template is="dom-repeat" items="{{users}}" as="user">

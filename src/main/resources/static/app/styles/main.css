@@ -15,6 +15,30 @@ body {
   padding: 0;
 }
 
-#logomenu {
-  background-image: url('/app/images/logo2.png');
+#dialog {
+  background-color: #ACC7A3;
+}
+
+#formdialog {
+  background-color: #ACC7A3;
+}
+
+paper-button.novo-button {
+  margin: 15px;
+  background-color: #465940;
+  color: white;
+  font-family: arial;
+  font-weight: bold;
+}
+
+.item-buttons {
+  width: 100%;
+  text-align: right;
+}
+
+div.list-content {
+  min-height: 300px;
+  max-height: 300px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }

@@ -61,12 +61,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Polymer({
         is: 'board-item',
         properties: {
+        	status: String,
         	task: {
         		type: Object,
         		notify: true
         	}
         },
         ready: function() {
+        	$("paper-card").addClass(this.status);
         }
       });
     })();
