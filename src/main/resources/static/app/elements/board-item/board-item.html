@@ -20,6 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       	margin: 2px;
       	background: #E5F0E1;
       	width: 200px;
+        z-index: 999!;
       }
       
       paper-card {
@@ -30,6 +31,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       		padding: 5px;
       		background: #D7EBD1;
       	};
+      }
+      
+      div.header {
+      	display: block;
+   		font-size: 15px;
+   		font-family: arial;
+   		color: #465940;
+   		padding: 5px;
+   		background: #D7EBD1;
       }
       
       div.card-content {
@@ -46,12 +56,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       	margin-right: 5px;
       }
     </style>
-    <paper-card class="task draggable" heading="{{task.title}}">
+    <paper-card class="task draggable">
+		<div class="header">
+			<paper-icon-button icon="build" style="width: 32px;" on-click="openForm"></paper-icon-button>
+			<div style="display: inline">{{task.title}}</div>
+		</div>
 		<div class="card-content">
 			<div class="content-row"><iron-icon icon="account-circle"></iron-icon>{{task.userLogin}}</div>
 			<div class="content-row"><iron-icon icon="assignment"></iron-icon>{{task.descriptionAbrev}}</div>
 		</div>
     </paper-card>
+    
+    <paper-dialog id="formdialog">
+    	<task-form task="{{task}}"></task-form>
+    </paper-dialog>
   </template>
 
   <script>
@@ -69,6 +87,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         ready: function() {
         	$("paper-card").addClass(this.status);
+        },
+        openForm: function() {
+        	document.getElementById("formdialog").open();
         }
       });
     })();
