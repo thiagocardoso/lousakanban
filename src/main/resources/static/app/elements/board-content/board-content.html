@@ -54,7 +54,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     <iron-signals on-iron-signal-refresh-issues="refreshIssues"></iron-signals>
     
-    <paper-material id="aberto" class="column-container droppable" elevation="1">
+    <paper-material id="aberto" class="column-container drop-aberta" elevation="1">
     	<span class="column-header">ABERTO</span>
     	<template is="dom-repeat" items="{{abertas}}">
     		<board-item task="{{item}}" status="aberta"></board-item>
@@ -64,23 +64,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-material id="desenvolvendo" class="column-container drop-desenvolvendo" elevation="1">
     	<span class="column-header">DESENVOLVENDO</span>
     	<template is="dom-repeat" items="{{desenvolvendo}}">
-			<board-item task="{{item}}"></board-item>
+			<board-item task="{{item}}" status="desenvolvendo"></board-item>
     	</template>
     </paper-material>
 
     <paper-material id="finalizado" class="column-container" elevation="1">
     	<span class="column-header">FINALIZADO</span>
-    	<paper-material id="resolvido" class="sub-column-container" elevation="0">
+    	<paper-material id="resolvido" class="sub-column-container drop-resolvido" elevation="0">
     		<span class="column-header">RESOLVIDO</span>
     		<template is="dom-repeat" items="{{resolvidas}}">
-    			<board-item task="{{item}}"></board-item>
+    			<board-item task="{{item}}" status="resolvido"></board-item>
     		</template>
 	    </paper-material>
 
-    	<paper-material id="cancelado" class="sub-column-container" elevation="0">
+    	<paper-material id="cancelado" class="sub-column-container drop-cancelado" elevation="0">
     		<span class="column-header">CANCELADO</span>
     		<template is="dom-repeat" items="{{canceladas}}">
-    			<board-item task="{{item}}"></board-item>
+    			<board-item task="{{item}}" status="cancelado"></board-item>
     		</template>
 	    </paper-material>
     </paper-material>
@@ -122,19 +122,47 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         setupDragAndDrop: function() {
         	interact('.draggable')
         	  .draggable({
-        	    // enable inertial throwing
-//         	    inertia: true,
+//         	    enable inertial throwing
+        	    inertia: true,
         	    onmove: dragMoveListener
         	  });
+        	
+        	interact('.drop-aberta').dropzone({
+	      		  accept: '.desenvolvendo .cancelado',
+	      		  overlap: 0.75,
+	      		  ondrop: function (event) {
+	      			 var task = event.relatedTarget.task;
+	      			 stepTask(task, "DESENVOLVENDO");
+	      		  }
+      		});
         	
         	interact('.drop-desenvolvendo').dropzone({
         		  accept: '.aberta',
         		  overlap: 0.75,
         		  ondrop: function (event) {
-        			 alert("dropped");
+        			 var task = event.relatedTarget.task;
+        			 stepTask(task, "ABERTO");
         		  }
         	});
-        },
+        	
+        	interact('.drop-resolvido').dropzone({
+      		  accept: '.desenvolvendo',
+      		  overlap: 0.75,
+      		  ondrop: function (event) {
+      			 var task = event.relatedTarget.task;
+      			 stepTask(task, "RESOLVIDO");
+      			}
+      		});
+        	
+        	interact('.drop-cancelado').dropzone({
+      		  accept: '.aberta .desenvolvendo',
+      		  overlap: 0.75,
+      		  ondrop: function (event) {
+      			 var task = event.relatedTarget.task;
+      			 stepTask(task, "CANCELADO");
+      			}
+      		});
+        },        
         refreshIssues: function() {
         	this.$.ajax.generateRequest();
         },
@@ -183,6 +211,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // update the posiion attributes
         target.setAttribute('data-x', x);
         target.setAttribute('data-y', y);
+    };
+    
+    stepTask: function stepTask(task, status) {
+    	task.status = status;
+		 
+	     $.ajax({
+			 url: '/ws/tasks/step',
+           type: 'post',
+           dataType: 'json',
+           contentType: 'application/json',
+           headers: { 
+               'Accept' : 'application/json',
+               'Content-Type': 'application/json'
+           },
+           data: JSON.stringify(task),
+           success: function( data, textStatus, jQxhr ){
+          	 	document.getElementById("ajax").generateRequest();
+           },
+           error: function( jqXhr, textStatus, errorThrown ){
+               console.log( errorThrown );
+           },
+           async: true
+       });        	
     }
   </script>
 </dom-module>
