@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     	url="/ws/users/list"
     	handle-as="json"
     	last-response="{{users}}"></iron-ajax>
-    <paper-card heading="Tarefa">
+    <paper-card style="background-color: #EDEDED" heading="Tarefa">
 		<form is="iron-form" id="form" method="post" action="/ws/tasks/save">
 		<div class="card-content">
 				<paper-input name="title" value="{{task.title}}" label="Título" required error-message="Necessário informar um título!"></paper-input>

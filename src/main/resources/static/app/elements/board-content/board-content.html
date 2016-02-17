@@ -120,12 +120,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         	this.setupDragAndDrop();
         },
         setupDragAndDrop: function() {
-        	interact('.draggable')
-        	  .draggable({
-//         	    enable inertial throwing
-        	    inertia: true,
-        	    onmove: dragMoveListener
-        	  });
+        	interact('.draggable-aberta')
+  	  		.draggable({
+  	    		inertia: true,
+  	    		restriction: '.drop-desenvolvendo .drop-cancelado',
+  	    		onmove: dragMoveListener
+  	  		});
+        	
+        	interact('.draggable-desenvolvendo')
+  	  		.draggable({
+  	    		inertia: true,
+  	    		restriction: '.drop-resolvido .drop-cancelado',
+  	    		onmove: dragMoveListener
+  	  		});
+        	
+        	interact('.draggable-cancelado')
+  	  		.draggable({
+  	    		inertia: true,
+  	    		restriction: '.drop-aberta',
+  	    		onmove: dragMoveListener
+  	  		});
         	
         	interact('.drop-aberta').dropzone({
 	      		  accept: '.desenvolvendo .cancelado',
@@ -231,6 +245,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            },
            error: function( jqXhr, textStatus, errorThrown ){
                console.log( errorThrown );
+          	   document.getElementById("ajax").generateRequest();
            },
            async: false
        });        	
