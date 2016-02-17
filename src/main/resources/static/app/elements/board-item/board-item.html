@@ -14,13 +14,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: inline-block;
+        z-index: 999!important;
       }
       
       paper-card.task {
       	margin: 2px;
       	background: #E5F0E1;
       	width: 200px;
-        z-index: 999!;
       }
       
       paper-card {
@@ -56,7 +56,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       	margin-right: 5px;
       }
     </style>
-    <paper-card class="task draggable">
+    <paper-card class="task">
 		<div class="header">
 			<paper-icon-button icon="build" style="width: 32px;" on-click="openForm"></paper-icon-button>
 			<div style="display: inline">{{task.title}}</div>
@@ -86,6 +86,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         	}
         },
         ready: function() {
+        	$(this).addClass("draggable");
         	$(this).addClass(this.status);
         },
         openForm: function() {
