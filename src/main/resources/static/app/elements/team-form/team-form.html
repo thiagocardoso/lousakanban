@@ -16,10 +16,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <paper-card style="background-color: #EDEDED" heading="Novo Usuário">
+    <paper-card style="background-color: #EDEDED" heading="Nova Equipe">
 		<form is="iron-form" id="form" method="post" action="/ws/teams/save">
 		<div class="card-content">
-				<paper-input name="name" value="{{team.name}}" label="Nome" required error-message="Necessário informar um nome para o time!"></paper-input>
+				<paper-input name="name" value="{{team.name}}" label="Nome" required error-message="Necessário informar um nome para a equipe!"></paper-input>
 		</div>
 		<div class="card-actions">
 			<paper-button on-click="doSubmit">Salvar</paper-button>

@@ -31,7 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				<paper-input name="email" value="{{user.email}}" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" label="E-mail" required error-message="Necessário informar um e-mail válido!"></paper-input>
 				<paper-input name="password" value="{{user.password}}" label="Senha" type="password" required error-message="Necessário informar uma senha válida!"></paper-input>
 				
-				<paper-dropdown-menu label="Time" selected-item="{{selected}}">
+				<paper-dropdown-menu label="Equipe" selected-item="{{selected}}">
         			<paper-menu class="dropdown-content">
             		<template is="dom-repeat" items="{{teams}}" as="team">
                 		<paper-item value="{{team.id}}">{{team.name}}</paper-item>
