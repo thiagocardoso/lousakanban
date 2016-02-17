@@ -20,7 +20,7 @@ public class TaskController {
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@RequestMapping("list")
 	public List<Task> list() {
 		List<User> users = userRepository.findAll();
@@ -30,7 +30,8 @@ public class TaskController {
 	}
 
 	@RequestMapping(value = "save", method = RequestMethod.POST)
-	public String save(@RequestParam("userLogin") String userLogin, @RequestParam("title") String title, @RequestParam("description") String description) {
+	public String save(@RequestParam("userLogin") String userLogin, @RequestParam("title") String title,
+			@RequestParam("description") String description) {
 		try {
 			User user = userRepository.findByLogin(userLogin);
 			Task.from(user, title, description);
@@ -40,23 +41,13 @@ public class TaskController {
 			return "ERROR";
 		}
 	}
-	
+
 	@RequestMapping(value = "step", method = RequestMethod.POST)
-	public String step(@RequestBody Task task) {
-		try {
-			User user = userRepository.findByLogin(task.getUserLogin());
-			Task task_ = user.taskByTitle(task.getTitle());
-			task_.setStatus(task.getStatus());
-			userRepository.save(user);
-			return "OK";
-		} catch (Exception e) {
-			return "ERROR";
-		}
+	public void step(@RequestBody Task task) {
+		User user = userRepository.findByLogin(task.getUserLogin());
+		Task task_ = user.taskByTitle(task.getTitle());
+		task_.setStatus(task.getStatus());
+		userRepository.save(user);
 	}
-	
-	@RequestMapping(value = "delete", method = RequestMethod.POST)
-	public void delete(@RequestBody Task task) {
-//		taskRepository.delete(task);
-	}
-	
+
 }

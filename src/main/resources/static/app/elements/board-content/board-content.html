@@ -30,7 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           
       paper-material.sub-column-container {
       	position: relative;
-      	display: inline-block;
+      	display: inline-table;
         min-height: 250px;
         background-color: #C6DEBF;
         width: 47%;
@@ -132,7 +132,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	      		  overlap: 0.75,
 	      		  ondrop: function (event) {
 	      			 var task = event.relatedTarget.task;
-	      			 stepTask(task, "DESENVOLVENDO");
+	      			 stepTask(task, "ABERTO");
 	      		  }
       		});
         	
@@ -141,7 +141,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         		  overlap: 0.75,
         		  ondrop: function (event) {
         			 var task = event.relatedTarget.task;
-        			 stepTask(task, "ABERTO");
+        			 stepTask(task, "DESENVOLVENDO");
         		  }
         	});
         	
@@ -232,7 +232,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            error: function( jqXhr, textStatus, errorThrown ){
                console.log( errorThrown );
            },
-           async: true
+           async: false
        });        	
     }
   </script>
