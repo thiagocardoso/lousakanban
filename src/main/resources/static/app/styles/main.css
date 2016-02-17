@@ -17,10 +17,12 @@ body {
 
 #dialog {
   background-color: #ACC7A3;
+  z-index: 999!important;
 }
 
 #formdialog {
   background-color: #ACC7A3;
+  z-index: 999!important;
 }
 
 paper-button.novo-button {

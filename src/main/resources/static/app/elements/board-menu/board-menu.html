@@ -82,6 +82,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         dialogClosed: function() {
         	this.$.dialog.close();
+        	location.reload();
         	this.fire("iron-signal", {name: 'refresh-issues', data: null});
         },
         openNewTask: function() {
