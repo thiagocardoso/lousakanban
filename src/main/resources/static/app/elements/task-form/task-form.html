@@ -44,6 +44,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		<div class="card-actions">
 			<paper-button on-click="doSubmit">Salvar</paper-button>
             <paper-button on-click="closeDialog">Cancelar</paper-button>
+            <template is="dom-if" if="{{task.title}}">
+            	<paper-button on-click="deleteTask">Apagar</paper-button>
+            </template>
 		</div>
 		</form>
     </paper-card>
@@ -71,6 +74,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			}
         },
         closeDialog: function() {
+        	this.fire("iron-signal", {name: 'dialog-menu-closed', data: null});
+        },
+        deleteTask: function() {
+        	$.ajax({
+    			 url: '/ws/tasks/delete',
+               type: 'post',
+               dataType: 'json',
+               contentType: 'application/json',
+               headers: { 
+                   'Accept' : 'application/json',
+                   'Content-Type': 'application/json'
+               },
+               data: JSON.stringify(this.task),
+               success: function( data, textStatus, jQxhr ){
+              	 	location.reload();
+               },
+               error: function( jqXhr, textStatus, errorThrown ){
+                   console.log( errorThrown );
+              	   location.reload();
+               },
+               async: false
+           	});        	
         	this.fire("iron-signal", {name: 'dialog-menu-closed', data: null});
         }
       });

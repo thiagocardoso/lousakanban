@@ -23,7 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     	handle-as="json"
     	last-response="{{teams}}"></iron-ajax>
 
-    <paper-card heading="Novo Usuário">
+    <paper-card style="background-color: #EDEDED" heading="Novo Usuário">
 		<form is="iron-form" id="form" method="post" action="/ws/users/save">
 		<div class="card-content">
 				<paper-input name="login" value="{{user.login}}" label="Login" readonly="{{user.login}}" required error-message="Necessário informar um login de usuário!"></paper-input>

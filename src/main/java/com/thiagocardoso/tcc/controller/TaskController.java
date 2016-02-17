@@ -49,5 +49,13 @@ public class TaskController {
 		task_.setStatus(task.getStatus());
 		userRepository.save(user);
 	}
+	
+	@RequestMapping(value = "delete", method = RequestMethod.POST)
+	public void delete(@RequestBody Task task) {
+		User user = userRepository.findByLogin(task.getUserLogin());
+		Task task_ = user.taskByTitle(task.getTitle());
+		user.removeTask(task_);
+		userRepository.save(user);
+	}
 
 }

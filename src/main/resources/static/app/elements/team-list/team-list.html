@@ -30,7 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	   	<paper-listbox>
 	    	<template is="dom-repeat" items="{{teams}}">
 	        	<paper-item style="margin: 2px; background-color: #E5F0E1">
-	        		<paper-item-body>
+	        		<paper-item-body style="width:100%;">
 	        			<div>{{item.name}}</div>
 	        		</paper-item-body>
 	        		<div class="item-buttons">
@@ -45,7 +45,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     	<paper-button class="novo-button" on-click="newteam">Novo</paper-button>
   	</div>
   	
-  	<paper-dialog id="formdialog" modal>
+  	<paper-dialog id="formdialog">
   		<team-form team="{{team}}"></team-form>
   	</paper-dialog>
   </template>
