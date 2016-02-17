@@ -133,4 +133,8 @@ public class User implements Serializable {
 		return MoreObjects.toStringHelper(this).add("login", this.login).add("name", this.name).toString();
 	}
 
+	public Task taskByTitle(String title) {
+		return this.tasks.stream().filter(t -> t.getTitle().equals(title)).findFirst().get();
+	}
+
 }
